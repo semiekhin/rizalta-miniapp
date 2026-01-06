@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
+      "source": "/api-dev/:path*",
       "destination": "https://provide-resident-retain-employees.trycloudflare.com/api/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://enrolled-chapter-clouds-fold.trycloudflare.com/api/:path*"
     }
   ]
 }
