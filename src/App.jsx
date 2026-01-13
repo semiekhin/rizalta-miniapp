@@ -114,7 +114,7 @@ export default function App() {
   const bLots = lots.filter(l => l.building === building);
   const floors = [...new Set(bLots.map(l => l.floor))].sort((a,b) => b-a);
   const fLots = (f) => {
-    let fl = bLots.filter(l => l.floor === f);
+    let fl = bLots.filter(l => l.floor === f).sort((a, b) => a.area - b.area);
     return filter === 'all' ? fl : fl.filter(l => l.status === filter);
   };
   const bStats = {
