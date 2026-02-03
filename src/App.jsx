@@ -83,7 +83,7 @@ export default function App() {
     const fetchLots = async () => {
       while (retries > 0) {
         try {
-          const response = await fetch('/api/lots', { 
+          const response = await fetch(API_PATH + '/lots', { 
             cache: 'no-store',
             headers: { 'Cache-Control': 'no-cache' }
           });
