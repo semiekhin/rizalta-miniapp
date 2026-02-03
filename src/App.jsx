@@ -92,6 +92,8 @@ export default function App() {
           if (d.ok && d.lots?.length > 0) {
             setLots(d.lots);
             setStats(d.stats);
+            const availBuildings = [...new Set(d.lots.map(l => l.building))].sort((a,b) => a-b);
+            if (availBuildings.length > 0) setBuilding(availBuildings[0]);
             setLoading(false);
             return;
           }
@@ -111,6 +113,8 @@ export default function App() {
     fetchLots();
   }, []);
 
+  const buildings = [...new Set(lots.map(l => l.building))].sort((a,b) => a-b);
+  const buildingNames = {1: "Family", 2: "Business", 3: "Digital"};
   const bLots = lots.filter(l => l.building === building);
   const floors = [...new Set(bLots.map(l => l.floor))].sort((a,b) => b-a);
   const fLots = (f) => {
@@ -150,10 +154,10 @@ export default function App() {
       </div>
 
       <div className="flex border-b border-slate-700 sticky top-12 z-30 bg-slate-900">
-        {[1,2].map(b => (
+        {buildings.map(b => (
           <button key={b} onClick={() => {setBuilding(b);setLot(null);setFloor(null)}}
             className={`flex-1 py-3 ${building===b ? 'text-amber-400 border-b-2 border-amber-400 bg-slate-800' : 'text-slate-400'}`}>
-            Корпус {b}<span className="block text-xs opacity-70">{b===1?'Family':'Business'}</span>
+            Корпус {b}<span className="block text-xs opacity-70">{buildingNames[b] || 'Корпус '+b}</span>
           </button>
         ))}
       </div>
@@ -192,7 +196,7 @@ export default function App() {
               </div>
               
               <p className="text-slate-400 text-sm mt-1">
-                Корпус {lot.building} ({lot.building === 1 ? 'Family' : 'Business'}) • {lot.floor} этаж
+                Корпус {lot.building} ({buildingNames[lot.building] || 'Корпус '+lot.building}) • {lot.floor} этаж
               </p>
               
               <div className="flex justify-between mt-2">
